@@ -1,0 +1,94 @@
+openapi: 3.0.0
+info:
+  title: Devops Engineer Test
+  license:
+    name: MIT
+  version: 1.0.0
+servers:
+- url: https://a08mdzpfvd.execute-api.eu-west-1.amazonaws.com/v1/
+paths:
+  /hello/{username}:
+    get:
+      summary: Get birthday for username
+      operationId: get_days_to_birthday
+      parameters:
+      - name: username
+        in: path
+        description: The username
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BirthdayResponse'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+    put:
+      summary: Create a birthday entry
+      operationId: add_birthday
+      parameters:
+      - name: username
+        in: path
+        description: The username
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: A JSON object containing birthday information
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Birthday'
+      responses:
+        "204":
+          description: No Content
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+components:
+  schemas:
+    BirthdayResponse:
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: message
+    Birthday:
+      required:
+      - dateOfBirth
+      type: object
+      properties:
+        dateOfBirth:
+          type: string
+    Error:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+
