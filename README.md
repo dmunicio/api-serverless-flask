@@ -8,7 +8,9 @@ Technologies involved are:
 - [Flask SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/)
 
 This code can be deployed to AWS easily by using [terraform](https://www.terraform.io/)
+The service is deployed in 
 
+You can test the [live version deployed](https://a08mdzpfvd.execute-api.eu-west-1.amazonaws.com/v1) with [Swagger Editor](https://editor.swagger.io/?url=https://raw.githubusercontent.com/dmunicio/api-serverless-flask/master/swagger/swagger.yaml).
 
 ## Infrastructure
 This deployment uses:
