@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -e
+CURRENT_DIR=$PWD
+DEPLOY_OUTPUT="$CURRENT_DIR/.env.deploy"
+# shellcheck disable=SC1091
+. ./bin/lib/activate-env.sh
+sourceEnv
+
+cd "$CURRENT_DIR/terraform" || exit 1
+if [[ ! -d .terraform ]]; then
+	terraform init -reconfigure --backend-config=config/prod.hcl
+fi
+terraform plan \
+	-var "lambda_zip_path=$LAMBDA_ZIP_PATH" \
+	-var "db_user=$DB_USER" \
+	-var "db_pass=$DB_PASS" 
+
+terraform apply \
+	-auto-approve \
+	-var "lambda_zip_path=$LAMBDA_ZIP_PATH" \
+	-var "db_user=$DB_USER" \
+	-var "db_pass=$DB_PASS" 
+
+echo "API_URL=$(terraform output api_url)" >> "$DEPLOY_OUTPUT"
+cd "$CURRENT_DIR" || exit 1
+
