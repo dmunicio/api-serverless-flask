@@ -23,7 +23,7 @@ def handle405(error=None):
 def handle500(error=None):
     return error_message(500, 'Something went wrong')
 
-@api.route('/hello/<username>', methods=['GET'])
+@api.route('/hello/<username>', methods=['GET','OPTIONS'])
 def get_birthday(username):
     """Get birthday for username
     ---
@@ -43,6 +43,11 @@ def get_birthday(username):
         examples:
           usernameA
     """
+    if request.method == "OPTIONS":
+      json_response = jsonify("")
+      json_response.headers.add('Access-Control-Allow-Origin', '*')
+      return json_response, 200
+
     # Username must contain only letters
     if not username.isalpha():
         return "username must contain only letters.", 400    
@@ -60,8 +65,9 @@ def get_birthday(username):
         response = { "message": f"Hello, {username}! Happy birthday!" }
     else:
         response = { "message": f"Hello, {username}! Your birthday is in {days} day(s)!" }
-
-    return jsonify(response), 200
+    json_response = jsonify(response)
+    json_response.headers.add('Access-Control-Allow-Origin', '*')
+    return  json_response, 200
 
 @api.route('/hello/<username>', methods=['PUT'])
 def set_birthday(username):
@@ -90,7 +96,7 @@ def set_birthday(username):
     responses:
       204:
         description: No Content
-    """       
+    """    
     # Username must contain only letters
     if not username.isalpha():
         return "username must contain only letters.", 400
