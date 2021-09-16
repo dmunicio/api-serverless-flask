@@ -7,14 +7,9 @@ env:
 # run local server
 ####################
 server:
-	@FLASK_APP=run.py flask run
-
-server-debug:
-	@$(shell FLASK_DEBUG=1 make server)
-
+	@docker-compose up
 server-docker:
 	@FLASK_APP=run.py flask run --host 0.0.0.0
-
 
 ####################
 # dependencies

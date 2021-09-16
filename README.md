@@ -49,7 +49,7 @@ $ source .env
 
 ##### On host
 ```
-$ make server-debug
+$ make server
 ```
 
 ##### In docker
