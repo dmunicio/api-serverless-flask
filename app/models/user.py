@@ -17,6 +17,7 @@ def setup_models(db):
             return User.query.filter_by(username=username).first()
         def add_birthday(self, username, date_of_birth):
             # if the user exists delete it
+            import pdb; pdb.set_trace
             user = self.get_by_username(username)
             if user is not None:
                 db.session.delete(user)

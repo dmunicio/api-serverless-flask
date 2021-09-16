@@ -7,6 +7,12 @@ def test_add_birthday_today(server):
         r = requests.put(server.url + '/hello/testuserA', json={'dateOfBirth': birthday})
         assert r.status_code == 204
 
+def test_add_birthday_today_duplicate(server):
+    birthday="1989" + datetime.now().strftime("-%m-%d")
+    with server.app_context():
+        r = requests.put(server.url + '/hello/testuserA', json={'dateOfBirth': birthday})
+        assert r.status_code == 204
+
 def test_add_birthday_tomorrow(server):
     birthday="1988" + (datetime.now() + timedelta(days=1)).strftime("-%m-%d")
     with server.app_context():

@@ -20,7 +20,7 @@ module "aurora" {
   #subnets             = data.aws_subnet_ids.all.ids
   #vpc_id              = data.aws_vpc.default.id
   #subnets             = "module.lambda_api_gateway.private_subnet_ids"
-  subnets             = module.lambda_api_gateway.private_subnet_ids
+  subnets             = module.lambda_api_gateway.nat_subnet_ids
   vpc_id              = module.lambda_api_gateway.vpc_id
   monitoring_interval = 60
   skip_final_snapshot = true

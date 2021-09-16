@@ -50,7 +50,7 @@ def get_birthday(username):
     user = db.get_by_username(username)
     
     if user is None:
-        return "", 204
+        return "user not found", 204
     birthday = datetime.strptime(user.date_of_birth, "%Y-%m-%d")
     days = days_to_birthday(birthday)
 
