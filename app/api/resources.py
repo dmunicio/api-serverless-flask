@@ -18,9 +18,9 @@ def handle404(error=None):
 def handle405(error=None):
     return error_message(405, 'Method not supported')
 
-#@api.app_errorhandler(500)
-#def handle500(error=None):
-#    return error_message(500, 'Something went wrong')
+@api.app_errorhandler(500)
+def handle500(error=None):
+    return error_message(500, 'Something went wrong')
 
 @api.route('/hello/<username>', methods=['GET','OPTIONS'])
 def get_birthday(username):
